@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CTF Scoreboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>CTF Scoreboard</h1>
+        
+        <div class="submit-form">
+            <h2>Submit Flag</h2>
+            <form id="flagForm">
+                <input type="text" id="teamName" placeholder="Team Name" required>
+                <input type="text" id="flag" placeholder="Flag" required>
+                <button type="submit">Submit</button>
+            </form>
+            <div id="message"></div>
+        </div>
+
+        <div class="scoreboard">
+            <h2>Current Rankings</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Team</th>
+                        <th>Points</th>
+                        <th>Last Submission</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for team in teams %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ team.name }}</td>
+                        <td>{{ team.points }}</td>
+                        <td>{{ team.last_submission.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('flagForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const teamName = document.getElementById('teamName').value;
+            const flag = document.getElementById('flag').value;
+            const messageDiv = document.getElementById('message');
+
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `team_name=${encodeURIComponent(teamName)}&flag=${encodeURIComponent(flag)}`
+                });
+                const data = await response.json();
+                
+                messageDiv.textContent = data.message || data.error;
+                messageDiv.className = data.success ? 'success' : 'error';
+                
+                if (data.success) {
+                    setTimeout(() => location.reload(), 1000);
+                }
+            } catch (error) {
+                messageDiv.textContent = 'Error submitting flag';
+                messageDiv.className = 'error';
+            }
+        });
+    </script>
+</body>
+</html> 

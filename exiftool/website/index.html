@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Metadata Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .upload-form {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Metadata Viewer</h1>
+    <div class="upload-form">
+        <form action="/cgi-bin/process.cgi" method="post" enctype="multipart/form-data">
+            <h2>Upload an image to view its metadata</h2>
+            <input type="file" name="image" accept="image/*">
+            <br><br>
+            <input type="submit" value="View Metadata">
+        </form>
+    </div>
+</body>
+</html> 
