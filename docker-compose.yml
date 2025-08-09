@@ -1,5 +1,5 @@
 services:
-  # Machine 1 - Apache 2.2.3 (Vulnerable)
+  # Machine 1 - Starting Point
   begin:
     build:
       context: ./begin
@@ -11,7 +11,7 @@ services:
     networks:
       ctf_network:
         ipv4_address: 172.20.0.8
-  
+  # Machine 2 - SQL Injection
   sqli:
     build:
       context: ./sqli
@@ -24,7 +24,7 @@ services:
       ctf_network:
         ipv4_address: 172.20.0.10
 
-
+  # Machine 3 - Ubuntu with multiple SSH ports
   ubuntu_ssh:
     build:
       context: ./ubuntu_ssh
@@ -37,25 +37,10 @@ services:
       ctf_network:
         ipv4_address: 172.20.0.63
 
-  # Machine 3 - PHP and MySQL
-  php:
+  # Machine 4 - Shellshock vulnerability
+  shellshock:
     build:
-      context: ./php
-      dockerfile: Dockerfile
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - FLAG=FLAG{sqli_vulnerable_php}
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=ctf_db
-    networks:
-      ctf_network:
-        ipv4_address: 172.20.0.169
-
-  # Machine 4 - Ubuntu with vulnerable SSH
-  ubuntu_vuln_ssh:
-    build:
-      context: ./ubuntu_vuln_ssh
+      context: ./shellshock
       dockerfile: Dockerfile
     cap_add:
       - NET_ADMIN
@@ -78,7 +63,7 @@ services:
       ctf_network:
         ipv4_address: 172.20.0.189
 
-  # Machine 6 - Upload vulnerable
+  # Machine 6 - Upload php vulnerable
   upload:
     build:
       context: ./upload

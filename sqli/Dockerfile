@@ -29,6 +29,18 @@ RUN sqlite3 /var/www/html/database.sqlite "CREATE TABLE users (id INTEGER PRIMAR
     sqlite3 /var/www/html/database.sqlite "INSERT INTO users (username, password) VALUES ('kahn', 'laotian_pride');" && \
     sqlite3 /var/www/html/database.sqlite "INSERT INTO users (username, password) VALUES ('admin', 'FLAG{propane_accessories_are_the_best}');"
 
+# Create system users corresponding to database entries
+RUN useradd -m -s /bin/bash rainey && echo 'rainey:texas_state' | chpasswd && \
+    useradd -m -s /bin/bash nancy && echo 'nancy:weather_girl' | chpasswd && \
+    useradd -m -s /bin/bash john_redcorn && echo 'john_redcorn:massage' | chpasswd
+
+# Copy flags directory and randomly place image in a user's home
+COPY flags/ /tmp/flags/
+RUN USERS=("rainey" "nancy" "john_redcorn") && \
+    RANDOM_USER=${USERS[$RANDOM % ${#USERS[@]}]} && \
+    cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
+    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html

@@ -24,23 +24,8 @@
     </context-param>
     
     <context-param>
-        <param-name>admin-password</param-name>
-        <param-value>sweet_lady_propane_123</param-value>
-    </context-param>
-    
-    <context-param>
-        <param-name>bill-secret</param-name>
-        <param-value>I_tell_you_what_this_is_classified</param-value>
-    </context-param>
-    
-    <context-param>
-        <param-name>flag-hint</param-name>
-        <param-value>Bill left his military files in /var/lib/tomcat9/ - the ghost cat knows how to find them!</param-value>
-    </context-param>
-    
-    <context-param>
-        <param-name>ghostcat-hint</param-name>
-        <param-value>Port 8009 AJP connector is vulnerable - CVE-2020-1938</param-value>
+        <param-name>bill</param-name>
+        <param-value>ComeBackLenore</param-value>
     </context-param>
     
 </web-app>

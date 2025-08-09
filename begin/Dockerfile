@@ -28,6 +28,18 @@ RUN mkdir /var/run/sshd && \
     echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
+# Create King of the Hill themed users
+RUN useradd -m -s /bin/bash hank && echo 'hank:propane123' | chpasswd && \
+    useradd -m -s /bin/bash dale && echo 'dale:conspiracy' | chpasswd && \
+    useradd -m -s /bin/bash bill && echo 'bill:army' | chpasswd
+
+# Copy flags directory and randomly place image in a user's home
+COPY flags/ /tmp/flags/
+RUN USERS=("hank" "dale" "bill") && \
+    RANDOM_USER=${USERS[$RANDOM % ${#USERS[@]}]} && \
+    cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
+    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg
+
 RUN echo "FLAG{root_access_enabled}" > /root/flag.txt && \
     chmod 644 /root/flag.txt
 

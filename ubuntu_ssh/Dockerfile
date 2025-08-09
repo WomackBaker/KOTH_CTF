@@ -20,6 +20,18 @@ COPY sshd_config_2222 /etc/ssh/sshd_config_2222
 RUN echo "FLAG{multiple_ssh_ports}" > /root/flag.txt && \
     chmod 600 /root/flag.txt
 
+# Create King of the Hill themed users
+RUN useradd -m -s /bin/bash strickland && echo 'strickland:sweet_lady_propane' | chpasswd && \
+    useradd -m -s /bin/bash joe_jack && echo 'joe_jack:mechanic' | chpasswd && \
+    useradd -m -s /bin/bash enrique && echo 'enrique:megalo_mart' | chpasswd
+
+# Copy flags directory and randomly place image in a user's home
+COPY flags/ /tmp/flags/
+RUN USERS=("strickland" "joe_jack" "enrique") && \
+    RANDOM_USER=${USERS[$RANDOM % ${#USERS[@]}]} && \
+    cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
+    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg
+
 # Expose ports
 EXPOSE 22 2222 23
 

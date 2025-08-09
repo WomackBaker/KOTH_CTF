@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shellshock Challenge</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        h1 { color: #333; }
+        .warning { background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin: 20px 0; }
+        .link { display: block; margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Shellshock Challenge</h1>
+        
+        <div class="warning">
+            <strong>Warning:</strong> This server is running legacy software with known vulnerabilities. Use for educational purposes only.
+        </div>
+        
+        <h2>Available Resources:</h2>
+        
+        <div class="link">
+            <strong>CGI Test Script:</strong>
+            <a href="/cgi-bin/test.cgi">/cgi-bin/test.cgi</a>
+            <br><small>A simple CGI script that displays environment variables</small>
+        </div>
+        
+        <div class="link">
+            <strong>SSH Access:</strong>
+            <code>ssh ctf_user@[server_ip] -p 22</code>
+            <br><small>Password: weakpass</small>
+        </div>
+        
+        <h3>Hint:</h3>
+        <p>Some shells might process environment variables in unexpected ways...</p>
+        
+        <hr>
+        <small>Server running Ubuntu 14.04 with bash 4.3-6ubuntu1</small>
+    </div>
+</body>
+</html>

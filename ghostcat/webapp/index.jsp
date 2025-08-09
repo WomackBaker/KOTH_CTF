@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bill's Barber Shop - Ghostcat Challenge</title>
+    <title>Bill's Barber Shop</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -60,11 +60,6 @@
                         <span class="price">🚨 TOP SECRET 🚨</span>
                     </div>
                 </div>
-            </div>
-            
-            <div class="challenge-hint">
-                <h3>🔍 Something's Not Right Here...</h3>
-                <p>Bill's been acting strange lately. He mentioned something about his server having some kind of "ghost" issue.</p>
             </div>
             
             <div class="army-memories">
