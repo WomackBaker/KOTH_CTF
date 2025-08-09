@@ -1,0 +1,22 @@
+# Ensure shell scripts always use LF line endings
+*.sh text eol=lf
+
+# Ensure other common Unix files use LF
+*.conf text eol=lf
+*.cfg text eol=lf
+
+# Default behavior for text files (let Git handle line endings automatically)
+* text=auto
+
+# Binary files
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.pem binary
+*.key binary
+*.crt binary
+*.p12 binary
+*.pfx binary

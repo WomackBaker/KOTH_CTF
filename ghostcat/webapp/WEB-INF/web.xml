@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    
+    <display-name>Bill Dauterive's Army Surplus &amp; Barber Shop</display-name>
+    <description>King of the Hill CTF Challenge - Ghostcat Vulnerability (Bill Dauterive Theme)</description>
+    
+    <context-param>
+        <param-name>shop-owner</param-name>
+        <param-value>William "Bill" Dauterive</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>army-unit</param-name>
+        <param-value>Former Army Sergeant - Operation Lone Star</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>database-url</param-name>
+        <param-value>jdbc:mysql://db:3306/ctf_db</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>admin-password</param-name>
+        <param-value>sweet_lady_propane_123</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>bill-secret</param-name>
+        <param-value>I_tell_you_what_this_is_classified</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>flag-hint</param-name>
+        <param-value>Bill left his military files in /var/lib/tomcat9/ - the ghost cat knows how to find them!</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>ghostcat-hint</param-name>
+        <param-value>Port 8009 AJP connector is vulnerable - CVE-2020-1938</param-value>
+    </context-param>
+    
+</web-app>

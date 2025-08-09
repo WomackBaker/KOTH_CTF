@@ -1,0 +1,346 @@
+/* Bill Dauterive King of the Hill Themed CSS */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto Slab', serif;
+    background: linear-gradient(135deg, #228B22, #32CD32, #90EE90);
+    background-size: 400% 400%;
+    animation: texasGradient 8s ease infinite;
+    min-height: 100vh;
+    color: #2F4F2F;
+}
+
+@keyframes texasGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.header {
+    text-align: center;
+    padding: 30px 0;
+    border-bottom: 5px solid #8B4513;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.army-stripes {
+    height: 10px;
+    background: repeating-linear-gradient(
+        45deg,
+        #4B0000,
+        #4B0000 10px,
+        #FFD700 10px,
+        #FFD700 20px
+    );
+    margin: 10px 0;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    color: #8B4513;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    margin: 20px 0;
+    font-weight: 700;
+}
+
+.main-content {
+    padding: 20px 0;
+}
+
+.bill-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    background: linear-gradient(45deg, #F5DEB3, #DEB887);
+    padding: 30px;
+    border-radius: 15px;
+    border: 3px solid #8B4513;
+}
+
+.bill-portrait {
+    flex: 1;
+    text-align: center;
+    min-width: 200px;
+}
+
+.bill-face {
+    font-size: 4em;
+    position: relative;
+    display: inline-block;
+    background: #FDBCB4;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid #8B4513;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.glasses {
+    font-size: 0.8em;
+    margin-bottom: 10px;
+}
+
+.mustache {
+    font-size: 0.6em;
+}
+
+.welcome-message {
+    flex: 2;
+    padding-left: 30px;
+    min-width: 300px;
+}
+
+.welcome-message h2 {
+    color: #8B4513;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+.bill-quote {
+    font-style: italic;
+    font-size: 1.2em;
+    color: #B22222;
+    margin: 15px 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-left: 5px solid #B22222;
+    border-radius: 5px;
+}
+
+.services {
+    margin-bottom: 40px;
+    background: rgba(255, 248, 220, 0.8);
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid #DAA520;
+}
+
+.services h3 {
+    text-align: center;
+    color: #8B4513;
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.service-card {
+    background: linear-gradient(145deg, #FFF8DC, #F5DEB3);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #DAA520;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.vulnerable-service {
+    background: linear-gradient(145deg, #FFB6C1, #FFA07A) !important;
+    border: 3px solid #DC143C !important;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 20, 60, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 20, 60, 0); }
+}
+
+.service-card h4 {
+    color: #8B4513;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.service-card p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.price {
+    font-weight: bold;
+    color: #B22222;
+    font-size: 1.1em;
+}
+
+.challenge-hint {
+    background: linear-gradient(135deg, #2F4F2F, #556B2F);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    text-align: center;
+    border: 3px solid #228B22;
+    box-shadow: 0 0 20px rgba(47, 79, 79, 0.5);
+}
+
+.challenge-hint h3 {
+    font-size: 1.6em;
+    margin-bottom: 15px;
+    color: #90EE90;
+}
+
+.hint-text {
+    font-style: italic;
+    font-size: 1.1em;
+    margin: 15px 0;
+    color: #98FB98;
+}
+
+.ghost-cat {
+    font-size: 3em;
+    margin: 20px 0;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.army-memories {
+    background: rgba(139, 69, 19, 0.1);
+    padding: 25px;
+    border-radius: 10px;
+    border: 2px solid #8B4513;
+    margin-bottom: 20px;
+}
+
+.army-memories h3 {
+    color: #8B4513;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.memory-box {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 5px solid #8B4513;
+}
+
+.memory-box p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.memory-box em {
+    color: #666;
+}
+
+.footer {
+    text-align: center;
+    padding: 25px 0;
+    border-top: 3px solid #8B4513;
+    margin-top: 30px;
+    background: linear-gradient(45deg, #F5DEB3, #DEB887);
+    border-radius: 10px;
+}
+
+.footer p {
+    margin: 5px 0;
+    color: #8B4513;
+}
+
+.footer em {
+    color: #B22222;
+    font-weight: bold;
+}
+
+.floating-propane {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 2em;
+    animation: bounce 2s infinite;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-30px); }
+    60% { transform: translateY(-15px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .bill-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .welcome-message {
+        padding-left: 0;
+        padding-top: 20px;
+    }
+    
+    .header h1 {
+        font-size: 2em;
+    }
+    
+    .service-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* King of the Hill Easter Eggs */
+.container:hover .floating-propane {
+    animation: spin 1s ease-in-out;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* CTF-specific styling */
+.vulnerable-service .price {
+    color: #FF0000 !important;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+/* Accessibility improvements */
+.service-card:focus {
+    outline: 3px solid #4169E1;
+    outline-offset: 2px;
+}
+
+button, .service-card {
+    cursor: pointer;
+}

@@ -3,9 +3,9 @@ FROM ubuntu:20.04
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Apache, PHP, and MySQL
+# Install Apache, PHP, MySQL and networking tools
 RUN apt-get update && \
-    apt-get install -y apache2 php php-mysql mariadb-server && \
+    apt-get install -y apache2 php php-mysql mariadb-server iproute2 net-tools && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -25,8 +25,12 @@ COPY exif_images/error_report.jpg /var/log/apache2/
 RUN echo "FLAG{sqli_vulnerable_php}" > /var/www/html/flag.txt && \
     chmod 644 /var/www/html/flag.txt
 
+# Copy startup script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
 # Expose ports
 EXPOSE 80 3306
 
-# Start services
-CMD ["apache2ctl", "-D", "FOREGROUND"] 
+# Start services with routing
+CMD ["/start.sh"] 

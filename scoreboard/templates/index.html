@@ -1,76 +1,102 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>CTF Scoreboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>CTF Scoreboard</h1>
-        
-        <div class="submit-form">
-            <h2>Submit Flag</h2>
-            <form id="flagForm">
-                <input type="text" id="teamName" placeholder="Team Name" required>
-                <input type="text" id="flag" placeholder="Flag" required>
-                <button type="submit">Submit</button>
-            </form>
-            <div id="message"></div>
-        </div>
+{% extends "base.html" %}
 
-        <div class="scoreboard">
-            <h2>Current Rankings</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Team</th>
-                        <th>Points</th>
-                        <th>Last Submission</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for team in teams %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ team.name }}</td>
-                        <td>{{ team.points }}</td>
-                        <td>{{ team.last_submission.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0"><i class="fas fa-trophy"></i> Scoreboard</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-hashtag"></i> Rank</th>
+                                <th><i class="fas fa-user"></i> Username</th>
+                                <th><i class="fas fa-star"></i> Points</th>
+                                <th><i class="fas fa-flag"></i> Flags Solved</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>
+                                    {% if loop.index == 1 %}
+                                        <i class="fas fa-crown text-warning"></i>
+                                    {% elif loop.index == 2 %}
+                                        <i class="fas fa-medal text-secondary"></i>
+                                    {% elif loop.index == 3 %}
+                                        <i class="fas fa-medal text-danger"></i>
+                                    {% else %}
+                                        {{ loop.index }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.points }}</td>
+                                <td>{{ user.get_solved_flags()|length }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        document.getElementById('flagForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const teamName = document.getElementById('teamName').value;
-            const flag = document.getElementById('flag').value;
-            const messageDiv = document.getElementById('message');
+<style>
+:root {
+    --main: rgb(44, 62, 80);
+    --main-light: rgb(52, 73, 94);
+    --main-dark: rgb(36, 50, 65);
+}
 
-            try {
-                const response = await fetch('/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `team_name=${encodeURIComponent(teamName)}&flag=${encodeURIComponent(flag)}`
-                });
-                const data = await response.json();
-                
-                messageDiv.textContent = data.message || data.error;
-                messageDiv.className = data.success ? 'success' : 'error';
-                
-                if (data.success) {
-                    setTimeout(() => location.reload(), 1000);
-                }
-            } catch (error) {
-                messageDiv.textContent = 'Error submitting flag';
-                messageDiv.className = 'error';
-            }
-        });
-    </script>
-</body>
-</html> 
+.card {
+    border: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: var(--main);
+    color: white;
+    border-bottom: none;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: var(--main-light);
+    color: white;
+    border: none;
+    padding: 15px;
+}
+
+.table tbody td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(44, 62, 80, 0.05);
+}
+
+.table-striped tbody tr:hover {
+    background-color: rgba(44, 62, 80, 0.1);
+}
+
+.fa-crown {
+    color: #FFD700 !important;
+}
+
+.fa-medal.text-secondary {
+    color: #C0C0C0 !important;
+}
+
+.fa-medal.text-danger {
+    color: #CD7F32 !important;
+}
+</style>
+{% endblock %} 

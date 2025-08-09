@@ -1,0 +1,8 @@
+FLAG{root_access_enabled}, 100
+FLAG{apache_ssl_vulnerable}, 100
+FLAG{lets_get_started}, 100
+FLAG{multiple_ssh_ports}, 100
+FLAG{propane_accessories_are_the_best}, 100
+FLAG{weak_ssh_config}, 100
+FLAG{ghostcat_vulnerability}, 100
+FLAG{check_your_uploads}, 100

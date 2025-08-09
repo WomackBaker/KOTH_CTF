@@ -6,5 +6,6 @@ ip route add 10.8.0.0/24 via 172.20.0.250 || echo "Route already exists or faile
 # Remove this script to avoid leaving traces
 rm -f /start.sh
 
-service mysql start
-apache2ctl -D FOREGROUND 
+# Start Tomcat
+cd /usr/share/tomcat9
+./bin/catalina.sh run

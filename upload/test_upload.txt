@@ -1,0 +1,5 @@
+This is a test file for Dale's Secure Upload System.
+
+Dale's Bug Detection Lab should have analyzed this file for government surveillance devices using PHP.
+
+Remember: "They're always watching!" - Dale Gribble 

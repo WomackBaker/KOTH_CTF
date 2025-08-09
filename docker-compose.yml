@@ -1,22 +1,36 @@
-version: '3'
-
 services:
   # Machine 1 - Apache 2.2.3 (Vulnerable)
-  apache:
+  begin:
     build:
-      context: ./apache
+      context: ./begin
       dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
     environment:
-      - FLAG=FLAG{apache_2_2_3_vulnerable}
+      - FLAG=FLAG{lets_get_started}
+    networks:
+      ctf_network:
+        ipv4_address: 172.20.0.8
+  
+  sqli:
+    build:
+      context: ./sqli
+      dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - FLAG=FLAG{sqli_is_scary}
     networks:
       ctf_network:
         ipv4_address: 172.20.0.10
 
-  # Machine 2 - Ubuntu with multiple SSH ports
+
   ubuntu_ssh:
     build:
       context: ./ubuntu_ssh
       dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
     environment:
       - FLAG=FLAG{multiple_ssh_ports}
     networks:
@@ -28,6 +42,8 @@ services:
     build:
       context: ./php
       dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
     environment:
       - FLAG=FLAG{sqli_vulnerable_php}
       - MYSQL_ROOT_PASSWORD=root
@@ -41,6 +57,8 @@ services:
     build:
       context: ./ubuntu_vuln_ssh
       dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
     environment:
       - FLAG=FLAG{weak_ssh_config}
     networks:
@@ -52,44 +70,61 @@ services:
     build:
       context: ./ghostcat
       dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
     environment:
       - FLAG=FLAG{ghostcat_vulnerability}
     networks:
       ctf_network:
         ipv4_address: 172.20.0.189
 
-  # Machine 6 - ExifTool vulnerable
-  exiftool:
+  # Machine 6 - Upload vulnerable
+  upload:
     build:
-      context: ./exiftool
+      context: ./upload
       dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
     environment:
-      - FLAG=FLAG{exiftool_vulnerability}
+      - FLAG=FLAG{check_your_uploads}
     networks:
       ctf_network:
         ipv4_address: 172.20.0.213
 
-  # Scoreboard
+  # OpenVPN Server
+  openvpn:
+    build:
+      context: ./openvpn-server
+      dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    sysctls:
+      - net.ipv4.ip_forward=1
+    ports:
+      - "1194:1194/udp"
+    volumes:
+      - ./openvpn-server/openvpn-data:/etc/openvpn
+    restart: unless-stopped
+    environment:
+      - OVPN_NAT=1
+    networks:
+      ctf_network:
+        ipv4_address: 172.20.0.250
+
+  # Scoreboard Service
   scoreboard:
     build:
       context: ./scoreboard
       dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
     volumes:
-      - scoreboard_data:/app/instance
+      - scoreboard_data:/app/data
     networks:
       ctf_network:
-        ipv4_address: 172.20.0.100
-
-  openvpn:
-    image: kylemanna/openvpn
-    container_name: openvpn
-    cap_add:
-      - NET_ADMIN
-    ports:
-      - "1194:1194/udp"
-    volumes:
-      - ovpn-data:/etc/openvpn
-    restart: unless-stopped
+        ipv4_address: 172.20.0.251
 
 networks:
   ctf_network:
@@ -101,4 +136,3 @@ networks:
 volumes:
   scoreboard_data:
   vpn_data:
-  ovpn-data: 

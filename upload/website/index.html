@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dale's Secure File Upload Portal</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #2d4a22 0%, #1a2f16 100%);
+            min-height: 100vh;
+            color: #e8f5e8;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(26, 47, 22, 0.95);
+            border: 3px solid #28a745;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(40, 167, 69, 0.4);
+        }
+        
+        h1 {
+            color: #28a745;
+            text-align: center;
+            font-size: 2.2em;
+            text-shadow: 0 0 15px rgba(40, 167, 69, 0.6);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #ffc107;
+            text-align: center;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .warning {
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border: 2px solid #ffc107;
+        }
+        
+        .upload-form {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            color: #ffc107;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            background: rgba(40, 167, 69, 0.1);
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            color: #e8f5e8;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+        }
+        
+        input[type="file"]:focus {
+            outline: none;
+            border-color: #ffc107;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+        }
+        
+        .upload-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 15px 30px;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .upload-btn:hover {
+            background: linear-gradient(45deg, #ffc107, #fd7e14);
+            border-color: #28a745;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+        
+        .file-types {
+            background: rgba(40, 167, 69, 0.1);
+            border: 2px dashed #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .file-types h3 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        
+        .file-types ul {
+            list-style-type: none;
+            padding: 0;
+            columns: 2;
+            column-gap: 30px;
+        }
+        
+        .file-types li {
+            color: #e8f5e8;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .file-types li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .nav-links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .nav-links a {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 0 10px;
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            color: white;
+            text-decoration: none;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            transform: translateY(-2px);
+        }
+        
+        .security-notice {
+            background: rgba(220, 53, 69, 0.1);
+            border: 2px dashed #dc3545;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            color: #ffc107;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ DALE'S SECURE UPLOAD PORTAL 🛡️</h1>
+        <div class="subtitle">CLASSIFIED FILE STORAGE - GOVERNMENT SURVEILLANCE PROOF</div>
+        
+        <div class="warning">
+            🚨 SECURE UPLOAD STATION - ANY FILE TYPE ACCEPTED 🚨<br>
+            "The perfect hiding spot for evidence they don't want you to have!" - Dale Gribble
+        </div>
+        
+        <div class="upload-form">
+            <h3 style="color: #28a745; margin-bottom: 20px;">📁 UPLOAD ANY FILE TYPE:</h3>
+            
+            <form action="upload_handler.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">🔍 Select File for Secure Storage:</label>
+                    <input type="file" name="file" id="file" accept="*/*" required>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button type="submit" class="upload-btn">🚀 UPLOAD TO DALE-CAVE</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="file-types">
+            <h3>✅ ACCEPTED FILE TYPES (ALL FILES WELCOME):</h3>
+            <ul>
+                <li>📄 Documents (PDF, DOC, TXT, RTF)</li>
+                <li>🖼️ Images (JPG, PNG, GIF, BMP, WEBP)</li>
+                <li>🎵 Audio (MP3, WAV, FLAC, OGG)</li>
+                <li>🎬 Video (MP4, AVI, MKV, MOV)</li>
+                <li>📦 Archives (ZIP, RAR, 7Z, TAR)</li>
+                <li>💻 Scripts (PHP, JS, PY, SH, BAT)</li>
+                <li>⚙️ Executables (EXE, BIN, APP)</li>
+                <li>🌐 Web Files (HTML, CSS, XML)</li>
+                <li>📊 Data (JSON, CSV, SQL, LOG)</li>
+                <li>🔧 Config Files (CONF, INI, CFG)</li>
+                <li>📚 eBooks (EPUB, MOBI, AZW)</li>
+                <li>🎨 Design (PSD, AI, SVG, EPS)</li>
+                <li>🗂️ Spreadsheets (XLS, ODS, CSV)</li>
+                <li>🔍 And literally ANY other file!</li>
+            </ul>
+        </div>
+        
+        <div class="security-notice">
+            🕵️ <strong>SECURITY GUARANTEE:</strong> All files uploaded to Dale's secure storage facility undergo advanced surveillance detection scanning.<br>
+            <em>Your files will be safe from government prying eyes... probably.</em>
+        </div>
+        
+        <div class="nav-links">
+            <a href="/upload.php">📂 VIEW UPLOADED FILES</a>
+            <a href="javascript:location.reload()">🔄 RESET FORM</a>
+        </div>
+    </div>
+</body>
+</html>

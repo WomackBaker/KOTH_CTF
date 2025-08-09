@@ -3,9 +3,9 @@ FROM ubuntu:20.04
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install SSH and Telnet
+# Install SSH, Telnet and networking tools
 RUN apt-get update && \
-    apt-get install -y openssh-server telnetd xinetd && \
+    apt-get install -y openssh-server telnetd xinetd iproute2 net-tools && \
     mkdir /var/run/sshd
 
 # Configure SSH
@@ -19,9 +19,6 @@ COPY sshd_config_2222 /etc/ssh/sshd_config_2222
 # Create flag file
 RUN echo "FLAG{multiple_ssh_ports}" > /root/flag.txt && \
     chmod 600 /root/flag.txt
-
-# Copy hidden image
-COPY exif_images/system_config.jpg /etc/ssh/
 
 # Expose ports
 EXPOSE 22 2222 23

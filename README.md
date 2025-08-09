@@ -60,11 +60,6 @@ docker-compose up --build
 ```
 
 2. Access the machines:
-- Web Server 1: http://172.20.0.10
-- Remote Access: 172.20.0.63 (ports 22, 2222, 23)
-- Web Server 2: http://172.20.0.169
-- Application Server: 172.20.0.189 (ports 8009, 8080)
-- File Server: http://172.20.0.213
 - Scoreboard: http://172.20.0.100:5000
 
 ## Hints
