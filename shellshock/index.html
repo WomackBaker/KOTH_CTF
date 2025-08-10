@@ -1,42 +1,132 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Shellshock Challenge</title>
+    <title>Nine Rivers Country Club - Member Portal</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .container { max-width: 600px; margin: 0 auto; }
-        h1 { color: #333; }
-        .warning { background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin: 20px 0; }
-        .link { display: block; margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff; }
+        body { 
+            font-family: 'Times New Roman', serif; 
+            margin: 0; 
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: #333;
+        }
+        .header {
+            background: #1a3b16;
+            color: #d4af37;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #d4af37;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            min-height: 100vh;
+        }
+        .content {
+            padding: 40px;
+        }
+        h1 { 
+            color: #d4af37; 
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        h2 {
+            color: #1a3b16;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 5px;
+        }
+        .club-info { 
+            background: #f8f5e4; 
+            border: 2px solid #d4af37; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .service { 
+            display: block; 
+            margin: 15px 0; 
+            padding: 15px; 
+            background: #f0f8f0; 
+            border-left: 6px solid #2d5a27; 
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .service:hover {
+            background: #e8f5e8;
+        }
+        .quote {
+            font-style: italic;
+            color: #666;
+            border-left: 4px solid #d4af37;
+            padding-left: 15px;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f5e4;
+            border-top: 2px solid #d4af37;
+            font-size: 0.9em;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to the Shellshock Challenge</h1>
-        
-        <div class="warning">
-            <strong>Warning:</strong> This server is running legacy software with known vulnerabilities. Use for educational purposes only.
+        <div class="header">
+            <h1>Nine Rivers Country Club</h1>
+            <p style="margin: 10px 0 0 0; font-size: 1.2em;">Est. 1962 - "Where Tradition Meets Excellence"</p>
         </div>
         
-        <h2>Available Resources:</h2>
-        
-        <div class="link">
-            <strong>CGI Test Script:</strong>
-            <a href="/cgi-bin/test.cgi">/cgi-bin/test.cgi</a>
-            <br><small>A simple CGI script that displays environment variables</small>
+        <div class="content">
+            <div class="club-info">
+                <strong>Welcome, Esteemed Members!</strong><br>
+                Nine Rivers Country Club has been serving the finest families of Arlen, Texas for over 60 years. 
+                Our exclusive membership includes distinguished residents like the Hill family, where propane 
+                accessories meet golf excellence.
+            </div>
+            
+            <h2>Member Services</h2>
+            
+            <div class="service">
+                <strong>Dining Reservations System:</strong>
+                <a href="/cgi-bin/reservations.cgi" style="color: #2d5a27; text-decoration: none; font-weight: bold;">/cgi-bin/reservations.cgi</a>
+                <br><small style="color: #666;">Reserve your table at our award-winning steakhouse (propane-grilled, naturally)</small>
+            </div>
+            
+            <div class="quote">
+                "I tell you what, Nine Rivers has the best dang propane-grilled steaks this side of the Brazos River. 
+                And their golf course? Smoother than a well-tuned propane flame, I tell you what."
+                <br><strong>- Hank Hill, Member Since 1985</strong>
+            </div>
+            
+            <h2>Maintenance Notice</h2>
+            <div class="club-info" style="background: #fff8dc; border-color: #daa520;">
+                <strong>IT Advisory:</strong> Our reservation system is running on legacy servers from the '90s. 
+                Dale mentioned something about potential "shell shock" vulnerabilities, but honestly, 
+                we're not sure what that computer mumbo-jumbo means. The system works fine for us!
+                <br><br>
+                <small><em>Note: If you experience any issues with environment variables behaving unexpectedly, 
+                please contact our IT consultant (Boomhauer) at your earliest convenience.</em></small>
+            </div>
+            
+            <h2>Club Highlights</h2>
+            <ul style="line-height: 1.8;">
+                <li>Championship 18-hole golf course designed by Tom Kite</li>
+                <li>Olympic-sized swimming pool (chlorinated, not salt water)</li>
+                <li>Tennis courts with lights for evening matches</li>
+                <li>Exclusive dining room featuring propane-grilled specialties</li>
+                <li>Monthly propane and propane accessories seminars</li>
+            </ul>
         </div>
         
-        <div class="link">
-            <strong>SSH Access:</strong>
-            <code>ssh ctf_user@[server_ip] -p 22</code>
-            <br><small>Password: weakpass</small>
+        <div class="footer">
+            <p>Nine Rivers Country Club | 1962 Propane Boulevard, Arlen, TX 73104</p>
+            <small>Server Environment: Classic Unix System (bash 4.3-6ubuntu1) | "If it ain't broke, don't fix it!" - Club Management</small>
         </div>
-        
-        <h3>Hint:</h3>
-        <p>Some shells might process environment variables in unexpected ways...</p>
-        
-        <hr>
-        <small>Server running Ubuntu 14.04 with bash 4.3-6ubuntu1</small>
     </div>
 </body>
 </html>

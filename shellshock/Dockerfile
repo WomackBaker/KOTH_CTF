@@ -14,45 +14,49 @@ RUN a2enmod cgi && \
     chown www-data:www-data /usr/lib/cgi-bin
 
 # Create vulnerable CGI script
-RUN echo '#!/bin/bash' > /usr/lib/cgi-bin/test.cgi && \
-    echo 'echo "Content-Type: text/html"' >> /usr/lib/cgi-bin/test.cgi && \
-    echo 'echo ""' >> /usr/lib/cgi-bin/test.cgi && \
-    echo 'echo "<html><body>"' >> /usr/lib/cgi-bin/test.cgi && \
-    echo 'echo "<h1>CGI Test Script</h1>"' >> /usr/lib/cgi-bin/test.cgi && \
-    echo 'echo "<p>Environment variables:</p>"' >> /usr/lib/cgi-bin/test.cgi && \
-    echo 'env | sort' >> /usr/lib/cgi-bin/test.cgi && \
-    echo 'echo "</body></html>"' >> /usr/lib/cgi-bin/test.cgi && \
-    chmod +x /usr/lib/cgi-bin/test.cgi
+RUN echo '#!/bin/bash' > /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "Content-Type: text/html"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo ""' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<html><head><title>Nine Rivers Country Club - Reservations</title></head><body>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<h2>Nine Rivers Country Club</h2>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<h3>Dining Reservation System</h3>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<p>Welcome to our reservation system. Please select your preferred dining time:</p>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<form method=\"GET\">"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<select name=\"time\"><option>5:00 PM</option><option>6:00 PM</option><option>7:00 PM</option><option>8:00 PM</option></select><br><br>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<input type=\"text\" name=\"name\" placeholder=\"Your Name\" required><br><br>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<input type=\"text\" name=\"phone\" placeholder=\"Phone Number\" required><br><br>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<input type=\"submit\" value=\"Make Reservation\">"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "</form>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<hr><small>System Status: $(date)</small>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<br><small>Debug Info (Internal Use Only):</small><br>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "<div style=\"font-size:10px; color:#999; max-height:100px; overflow:auto;\">"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'env | sort | head -20' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "</div>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    echo 'echo "</body></html>"' >> /usr/lib/cgi-bin/reservations.cgi && \
+    chmod +x /usr/lib/cgi-bin/reservations.cgi
 
-# Configure vulnerable SSH
-RUN echo 'root:password123' | chpasswd && \
-    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
-    sed -i 's/#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config
-
-# Create vulnerable user and hide flag
-RUN useradd -m -s /bin/bash ctf_user && \
-    echo 'ctf_user:weakpass' | chpasswd && \
-    echo "FLAG{shellshock_bash_cve_2014_6271}" > /home/ctf_user/flag.txt && \
-    chown ctf_user:ctf_user /home/ctf_user/flag.txt && \
-    chmod 600 /home/ctf_user/flag.txt
-
+RUN echo "FLAG{suids_are_fun}" > /root/flag.txt
 # Create additional King of the Hill themed users
 RUN useradd -m -s /bin/bash boomhauer && echo 'boomhauer:dang_ol_man' | chpasswd && \
     useradd -m -s /bin/bash cotton && echo 'cotton:killed_fiddy' | chpasswd && \
     useradd -m -s /bin/bash kahn && echo 'kahn:laotian' | chpasswd
 
+RUN echo "FLAG{shellshock_bash_cve_2014_6271}" > /home/kahn/flag.txt
+
+# Set up SUID binary for privilege escalation
+RUN chmod u+s /usr/bin/find
+
 # Copy flags directory and randomly place image in a user's home
 COPY flags/ /tmp/flags/
-RUN USERS=("boomhauer" "cotton" "kahn" "ctf_user") && \
+RUN /bin/bash -c 'USERS=("boomhauer" "cotton" "kahn" "ctf_user") && \
     RANDOM_USER=${USERS[$RANDOM % ${#USERS[@]}]} && \
     cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
-    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg
+    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg'
 
 # Copy web content
 COPY index.html /var/www/html/index.html
 
-# Copy startup script
+# Copy startup script and make it executable
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
@@ -60,4 +64,4 @@ RUN chmod +x /start.sh
 EXPOSE 22 80
 
 # Start services
-CMD ["/start.sh"] 
+CMD ["/bin/bash", "/start.sh"] 

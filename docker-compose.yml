@@ -6,8 +6,6 @@ services:
       dockerfile: Dockerfile
     cap_add:
       - NET_ADMIN
-    environment:
-      - FLAG=FLAG{lets_get_started}
     networks:
       ctf_network:
         ipv4_address: 172.20.0.8
@@ -18,8 +16,6 @@ services:
       dockerfile: Dockerfile
     cap_add:
       - NET_ADMIN
-    environment:
-      - FLAG=FLAG{sqli_is_scary}
     networks:
       ctf_network:
         ipv4_address: 172.20.0.10
@@ -31,8 +27,6 @@ services:
       dockerfile: Dockerfile
     cap_add:
       - NET_ADMIN
-    environment:
-      - FLAG=FLAG{multiple_ssh_ports}
     networks:
       ctf_network:
         ipv4_address: 172.20.0.63
@@ -44,8 +38,6 @@ services:
       dockerfile: Dockerfile
     cap_add:
       - NET_ADMIN
-    environment:
-      - FLAG=FLAG{weak_ssh_config}
     networks:
       ctf_network:
         ipv4_address: 172.20.0.215
@@ -57,8 +49,6 @@ services:
       dockerfile: Dockerfile
     cap_add:
       - NET_ADMIN
-    environment:
-      - FLAG=FLAG{ghostcat_vulnerability}
     networks:
       ctf_network:
         ipv4_address: 172.20.0.189
@@ -70,8 +60,6 @@ services:
       dockerfile: Dockerfile
     cap_add:
       - NET_ADMIN
-    environment:
-      - FLAG=FLAG{check_your_uploads}
     networks:
       ctf_network:
         ipv4_address: 172.20.0.213

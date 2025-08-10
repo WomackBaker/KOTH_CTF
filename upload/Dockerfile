@@ -27,10 +27,10 @@ RUN useradd -m -s /bin/bash minh && echo 'minh:ocean_walker' | chpasswd && \
 
 # Copy flags directory and randomly place image in a user's home
 COPY flags/ /tmp/flags/
-RUN USERS=("minh" "connie" "buckley") && \
+RUN /bin/bash -c 'USERS=("minh" "connie" "buckley") && \
     RANDOM_USER=${USERS[$RANDOM % ${#USERS[@]}]} && \
     cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
-    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg
+    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg'
 
 # Expose port 80
 EXPOSE 80

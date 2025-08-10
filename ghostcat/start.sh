@@ -2,11 +2,14 @@
 
 # Add route to VPN network via OpenVPN container
 ip route add 10.8.0.0/24 via 172.20.0.250 || echo "Route already exists or failed to add"
+ip route add 192.168.255.0/24 via 172.20.0.250 || echo "Route already exists or failed to add"
 
 # Create user for SSH access
 useradd -m bill
 echo "bill:ComeBackLenore" | chpasswd
-usermod -aG sudo bill
+
+# Add bill to sudoers with awk for privilege escalation
+echo 'bill ALL=(root) NOPASSWD: /usr/bin/awk' >> /etc/sudoers
 
 # Start SSH service
 service ssh start

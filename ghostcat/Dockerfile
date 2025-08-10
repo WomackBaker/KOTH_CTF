@@ -3,9 +3,9 @@ FROM ubuntu:18.04
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Java, wget, networking tools, and SSH
+# Install Java, wget, networking tools, SSH, and sudo
 RUN apt-get update && \
-    apt-get install -y default-jdk wget iproute2 net-tools openssh-server && \
+    apt-get install -y default-jdk wget iproute2 net-tools openssh-server sudo && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -33,6 +33,7 @@ COPY webapp/ /usr/share/tomcat9/webapps/ROOT/
 RUN echo "FLAG{ghostcat_vulnerability}" > /var/lib/tomcat9/flag.txt && \
     chmod 644 /var/lib/tomcat9/flag.txt
 
+RUN echo "FLAG{always_check_sudo}" > /root/flag.txt
 # Configure SSH
 RUN mkdir /var/run/sshd && \
     echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && \
@@ -44,12 +45,18 @@ RUN useradd -m -s /bin/bash bobby && echo 'bobby:thats_my_purse' | chpasswd && \
     useradd -m -s /bin/bash peggy && echo 'peggy:substitute' | chpasswd && \
     useradd -m -s /bin/bash luanne && echo 'luanne:beauty' | chpasswd
 
+# Configure dangerous sudo permissions for privilege escalation
+RUN echo 'bobby ALL=(root) NOPASSWD: /usr/bin/awk' >> /etc/sudoers && \
+    echo 'peggy ALL=(root) NOPASSWD: /usr/bin/awk' >> /etc/sudoers && \
+    echo 'luanne ALL=(root) NOPASSWD: /usr/bin/awk' >> /etc/sudoers && \
+    echo 'bill ALL=(root) NOPASSWD: /usr/bin/awk' >> /etc/sudoers
+
 # Copy flags directory and randomly place image in a user's home
 COPY flags/ /tmp/flags/
-RUN USERS=("bobby" "peggy" "luanne") && \
+RUN /bin/bash -c 'USERS=("bobby" "peggy" "luanne") && \
     RANDOM_USER=${USERS[$RANDOM % ${#USERS[@]}]} && \
     cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
-    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg
+    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg'
 
 # Copy startup script
 COPY start.sh /start.sh
