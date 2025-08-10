@@ -52,6 +52,8 @@ services:
     networks:
       ctf_network:
         ipv4_address: 172.20.0.189
+      hidden_network:
+        ipv4_address: 192.168.100.10
 
   # Machine 6 - Upload php vulnerable
   upload:
@@ -63,6 +65,17 @@ services:
     networks:
       ctf_network:
         ipv4_address: 172.20.0.213
+
+  # Machine 7 - Arlen Service Center (Hidden Network)
+  arlenservice:
+    build:
+      context: ./arlenservice
+      dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
+    networks:
+      hidden_network:
+        ipv4_address: 192.168.100.20
 
   # OpenVPN Server
   openvpn:
@@ -105,6 +118,11 @@ networks:
       driver: default
       config:
         - subnet: 172.20.0.0/16
+  hidden_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24
 
 volumes:
   scoreboard_data:

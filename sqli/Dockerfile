@@ -22,6 +22,9 @@ RUN sqlite3 /var/www/html/database.sqlite "CREATE TABLE users (id INTEGER PRIMAR
     sqlite3 /var/www/html/database.sqlite "INSERT INTO users (username, password) VALUES ('john_redcorn', 'massage');" && \
     sqlite3 /var/www/html/database.sqlite "INSERT INTO users (username, password) VALUES ('rainey', 'texas_state');" && \
     sqlite3 /var/www/html/database.sqlite "INSERT INTO users (username, password) VALUES ('nancy', 'weather_girl');" && \
+    sqlite3 /var/www/html/database.sqlite "INSERT INTO users (username, password) VALUES ('strickland', 'propane123');" && \
+    sqlite3 /var/www/html/database.sqlite "INSERT INTO users (username, password) VALUES ('propane_tech', 'sweetlady');" && \
+    sqlite3 /var/www/html/database.sqlite "INSERT INTO users (username, password) VALUES ('mechanic', 'automotive');" && \
     sqlite3 /var/www/html/database.sqlite "INSERT INTO users (username, password) VALUES ('admin', 'FLAG{propane_accessories_are_the_best}');"
 
 RUN echo "FLAG{cron_job_vulnerability}" > /root/flag.txt
