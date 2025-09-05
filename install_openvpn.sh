@@ -322,16 +322,6 @@ for i in $(seq 1 $CLIENT_COUNT); do
     echo "✓ Generated $CLIENT_NAME.ovpn"
 done
 
-# Update docker-compose.yml to use the correct port mapping
-if [ -f "$DOCKER_COMPOSE_FILE" ]; then
-    echo "Updating Docker Compose configuration..."
-    
-    # Update the port mapping in docker-compose.yml
-    sed -i.bak "s/\"1194:1194\/udp\"/\"$PORT:1194\/udp\"/g" "$DOCKER_COMPOSE_FILE"
-    
-    echo "✓ Updated port mapping in $DOCKER_COMPOSE_FILE"
-fi
-
 # Copy OpenVPN data to the server directory
 echo "Copying OpenVPN data to server directory..."
 cp -r "$OVPN_DATA_DIR"/* "./openvpn-server/openvpn-data/" 2>/dev/null || true

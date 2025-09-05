@@ -8,9 +8,6 @@ ip route add 192.168.255.0/24 via 172.20.0.250 || echo "Route already exists or 
 useradd -m bill
 echo "bill:ComeBackLenore" | chpasswd
 
-# Add bill to sudoers with awk for privilege escalation
-echo 'bill ALL=(root) NOPASSWD: /usr/bin/awk' >> /etc/sudoers
-
 # Start SSH service
 service ssh start
 

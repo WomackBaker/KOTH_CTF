@@ -8,10 +8,13 @@ RUN apt-get update && \
     apt-get install -y apache2 php libapache2-mod-php openssh-server sudo \
                        net-tools iproute2 curl vim nano && \
     apt-get clean && \
+    apt install gcc -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Enable Apache modules
 RUN a2enmod rewrite ssl php7.4
+
+RUN echo 'root:Password123!' | chpasswd
 
 # Configure SSH
 RUN mkdir /var/run/sshd && \
@@ -47,6 +50,23 @@ RUN if [ -d /tmp/flags ]; then \
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
 
+# Make /usr/bin/passwd SUID-root for Dirty COW demo
+RUN chmod u+s /usr/bin/passwd
+
+RUN echo "su root" >> /home/strickland/.bash_history
+RUN echo "Password123! ^C" >> /home/strickland/.bash_history
+RUN echo "su root" >> /home/strickland/.bash_history
+RUN echo "Password123!" >> /home/strickland/.bash_history
+
+RUN echo "FLAG{IS_IT_OK_THAT_I_FEEL_LIKE_NOT_LIVING_ANYMORE_DAD?}" > /root/root.txt
+
+# Copy flags directory and randomly place image in a user's home
+COPY flags/ /tmp/flags/
+RUN /bin/bash -c 'USERS=("propane_tech" "strickland" "mechanic") && \
+    RANDOM_USER=${USERS[$RANDOM % ${#USERS[@]}]} && \
+    cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
+    chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg'
+
 # Copy startup script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
@@ -55,4 +75,4 @@ RUN chmod +x /start.sh
 EXPOSE 80 22
 
 # Start services
-CMD ["/start.sh"]
+CMD ["/bin/bash", "-c", "if [ -f /start.sh ]; then /start.sh; else tail -f /dev/null; fi"]

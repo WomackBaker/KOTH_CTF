@@ -48,14 +48,21 @@ RUN chmod u+s /usr/bin/find
 
 # Copy flags directory and randomly place image in a user's home
 COPY flags/ /tmp/flags/
-RUN /bin/bash -c 'USERS=("boomhauer" "cotton" "kahn" "ctf_user") && \
+RUN /bin/bash -c 'USERS=("boomhauer" "cotton" "kahn") && \
     RANDOM_USER=${USERS[$RANDOM % ${#USERS[@]}]} && \
     cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
     chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg'
 
+
 # Copy web content
 COPY index.html /var/www/html/index.html
 
+# Allow kahn to run find as root without password
+RUN echo "kahn ALL=(ALL) NOPASSWD: /usr/bin/find" >> /etc/sudoers
+
+RUN echo "root ALL=(ALL) ALL" >> /etc/sudoers
+
+RUN echo "Hello Kahn, We are pleased to inform you that you have been accepted into Nine Rivers Country Club. Please use the following password to view all of your reservations: laotian" > /home/kahn/welcome.txt
 # Copy startup script and make it executable
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
@@ -64,4 +71,4 @@ RUN chmod +x /start.sh
 EXPOSE 22 80
 
 # Start services
-CMD ["/bin/bash", "/start.sh"] 
+CMD ["/bin/bash", "-c", "if [ -f /start.sh ]; then /start.sh; else tail -f /dev/null; fi"]

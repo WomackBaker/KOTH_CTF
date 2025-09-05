@@ -58,6 +58,8 @@ RUN /bin/bash -c 'USERS=("rainey" "nancy" "john_redcorn") && \
     cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
     chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg'
 
+RUN echo "FLAG{MY_SWEET_NAN_NAN}" > /home/john_redcorn/flag.txt
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
@@ -71,4 +73,4 @@ RUN chmod +x /start.sh
 EXPOSE 80 22
 
 # Start Apache with routing
-CMD ["/start.sh"] 
+CMD ["/bin/bash", "-c", "if [ -f /start.sh ]; then /start.sh; else tail -f /dev/null; fi"]

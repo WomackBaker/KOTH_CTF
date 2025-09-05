@@ -7,8 +7,9 @@ ENV TZ=America/New_York
 # Install Apache, PHP, Python3, and networking tools
 RUN apt-get update && \
     apt-get install -y tzdata && \
-    apt-get install -y apache2 php libapache2-mod-php python3 iproute2 net-tools && \
-    a2enmod php7.2
+    apt-get install -y apache2 php libapache2-mod-php python3 iproute2 net-tools openssh-server && \
+    a2enmod php7.2 && \
+    mkdir -p /run/sshd
 
 # Copy website files and startup script
 COPY website/ /var/www/html/
@@ -37,8 +38,11 @@ RUN /bin/bash -c 'USERS=("minh" "connie" "buckley") && \
     cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
     chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg'
 
+RUN echo "FLAG{Kahn_JR_I_DONT_HEAR_ANY_BEAUTIFUL_MUSIC}" > /root/root.txt
+RUN echo "FLAG{WHO_IS_DERK_WHAT_IS_A_RAPID_RELEASE_SUPPLEMENT_WHERE_IS_YOUR_PUMP_AND_WHY_IS_DERK_TRYING_TO_MAX_IT}" > /flag.txt
+
 # Expose ports 80 (main service) and 8080 (hidden King of the Hill service)
-EXPOSE 80 8080
+EXPOSE 80 8080 22
 
 # Start with custom script
-CMD ["/start.sh"]
+CMD ["/bin/bash", "-c", "service ssh start; if [ -f /start.sh ]; then /start.sh; else tail -f /dev/null; fi"]

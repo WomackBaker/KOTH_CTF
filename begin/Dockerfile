@@ -42,9 +42,7 @@ RUN /bin/bash -c 'USERS=("hank" "dale" "bill") && \
     cp /tmp/flags/*.jpg /home/$RANDOM_USER/ && \
     chown $RANDOM_USER:$RANDOM_USER /home/$RANDOM_USER/*.jpg'
 
-RUN echo "FLAG{root_access_enabled}" > /root/flag.txt && \
-    chmod 644 /root/flag.txt
-
+RUN echo "FLAG{THREE_TOED_OPPOSUM_BABY}" > /home/bill/flag.txt
 # Copy startup script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
@@ -53,4 +51,4 @@ RUN chmod +x /start.sh
 EXPOSE 80 22
 
 # Start both SSH and Apache with routing
-CMD ["/start.sh"]
+CMD ["/bin/bash", "-c", "if [ -f /start.sh ]; then /start.sh; else tail -f /dev/null; fi"]

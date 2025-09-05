@@ -20,8 +20,6 @@ COPY sshd_config_2222 /etc/ssh/sshd_config_2222
 RUN echo "FLAG{multiple_ssh_ports}" > /root/flag.txt && \
     chmod 600 /root/flag.txt
 
-RUN echo "FLAG{HANK_PROPANE_AND_PROPHET}" > /root/flag_hank.txt && \
-    chmod 600 /root/flag_hank.txt
 # Create King of the Hill themed users
 RUN useradd -m -s /bin/bash strickland && echo 'strickland:sweet_lady_propane' | chpasswd && \
     useradd -m -s /bin/bash joe_jack && echo 'joe_jack:mechanic' | chpasswd && \
@@ -44,6 +42,8 @@ RUN mkdir -p /opt/scripts && \
     chown root:root /opt/scripts/runner.sh && \
     echo '@reboot root nohup /opt/scripts/runner.sh > /dev/null 2>&1 &' >> /etc/crontab
 
+RUN echo "FLAG{THAT_BOY_AINT_RIGHT}" > /home/strickland/flag_hank.txt
+
 # Copy flags directory and randomly place image in a user's home
 COPY flags/ /tmp/flags/
 RUN /bin/bash -c 'USERS=("strickland" "joe_jack" "enrique") && \
@@ -57,4 +57,4 @@ EXPOSE 22 2222 23
 # Start services
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
-CMD ["/start.sh"] 
+CMD ["/bin/bash", "-c", "if [ -f /start.sh ]; then /start.sh; else tail -f /dev/null; fi"]

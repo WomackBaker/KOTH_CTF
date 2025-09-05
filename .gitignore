@@ -20,6 +20,11 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+openvpn-server/openvpn-data/
+client_configs/
+*.key
+*.crt
+*.ovpn
 
 # Ignore Docker build context
 .dockerignore

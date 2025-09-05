@@ -19,7 +19,7 @@ Each container in this CTF environment includes King of the Hill themed user acc
 1. Clone the git repo
 
 ```
-git clone https://github.com/WomackBaker/USC_CTF.git
+git clone https://github.com/WomackBaker/KOTH_CTF.git
 ```
 
 2. Ensure docker is up and running
@@ -27,7 +27,7 @@ git clone https://github.com/WomackBaker/USC_CTF.git
 docker -h
 ```
 
-3. Bring up the docker enviroment
+3. Bring up the docker environment
 ```
 docker-compose up --build -d
 ```

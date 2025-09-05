@@ -139,6 +139,8 @@ def init_db():
         db.create_all()
 
 if __name__ == '__main__':
-    # Initialize the database
-    init_db()
-    app.run(host='0.0.0.0', port=8000) 
+    # Only initialize the database if it does not exist
+    db_path = os.path.join('data', 'scoreboard.db')
+    if not os.path.exists(db_path):
+        init_db()
+    app.run(host='0.0.0.0', port=8000)

@@ -7,6 +7,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y default-jdk wget iproute2 net-tools openssh-server sudo && \
     apt-get clean && \
+    apt install iputils-ping -y && \
+    apt install nmap -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Download and install a specific vulnerable Tomcat version
@@ -66,4 +68,4 @@ RUN chmod +x /start.sh
 EXPOSE 8009 8080 22
 
 # Start Tomcat with routing
-CMD ["/start.sh"] 
+CMD ["/bin/bash", "-c", "if [ -f /start.sh ]; then /start.sh; else tail -f /dev/null; fi"]
