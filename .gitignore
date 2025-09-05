@@ -20,7 +20,9 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-openvpn-server/openvpn-data/
+openvpn-server/openvpn-data/pki/
+openvpn-server/openvpn-data/crl.pem
+openvpn-server/openvpn-data/pki/ccd/
 client_configs/
 *.key
 *.crt
